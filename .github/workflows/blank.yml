@@ -45,18 +45,18 @@ jobs:
     if: github.event_name != 'pull_request' # Only runs for pushes, not for pull requests
     steps:
       - name: Manual Approval
+        if: always() # This ensures the step always runs, regardless of previous job status
         uses: actions/github-script@v5
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const { data: workflowRuns } = await github.actions.listRepoWorkflowRuns({
+            const { data: workflowRun } = await github.actions.getWorkflowRun({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              workflow_id: context.workflow,
-              status: "queued",
+              run_id: context.runId,
             });
-            if (workflowRuns.total_count > 0) {
-              core.setFailed("Workflow run is already in the queue.");
-            } else {
+            if (workflowRun.status == 'queued') {
               console.log("Workflow can be triggered.");
+            } else {
+              core.setFailed("Workflow run is already in progress or completed.");
             }
