@@ -11,12 +11,12 @@ on:
 jobs:
   myjob2:
    runs-on: ubuntu-latest
-    steps:
-      # Define steps for the first job here
-      - name: Step 1 of Job 1
-        run: echo "This is Job 1, Step 1"
-      - name: Step 2 of Job 1
-        run: echo "This is Job 1, Step 2"
+   steps:
+   # Define steps for the first job here
+     - name: Step 1 of Job 1
+       run: echo "This is Job 1, Step 1"
+     - name: Step 2 of Job 1
+       run: echo "This is Job 1, Step 2"
   myjob:
     runs-on: ubuntu-latest
     steps:
